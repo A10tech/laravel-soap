@@ -16,6 +16,7 @@ use GuzzleHttp\RedirectMiddleware;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use JetBrains\PhpStorm\ArrayShape;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class SoapClientTest extends TestCase
 {
@@ -136,13 +137,7 @@ class SoapClientTest extends TestCase
         Soap::assertSentCount(3);
     }
 
-    /**
-     * @dataProvider soapActionProvider
-     *
-     * @param $action
-     * @param $fake
-     * @param $exspected
-     */
+    #[DataProvider('soapActionProvider')]
     public function testSoapFake($action, $fake, $exspected)
     {
         $fake = collect($fake)->map(function ($item) {
@@ -251,12 +246,7 @@ class SoapClientTest extends TestCase
         self::assertArrayHasKey('FahrenheitToCelsiusResult', $result->json());
     }
 
-    /**
-     * @dataProvider soapHeaderProvider
-     *
-     * @param $header
-     * @param $exspected
-     */
+    #[DataProvider('soapHeaderProvider')]
     public function testSoapWithDifferentHeaders($header, $exspected): void
     {
         Soap::fake();
